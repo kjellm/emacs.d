@@ -28,7 +28,7 @@
 (put 'downcase-region 'disabled nil)
 (put 'upcase-region 'disabled nil)
 
-(setq fill-column 78)
+(setq-default fill-column 78)
 
 (set-frame-font "Menlo-12")
 
@@ -49,6 +49,21 @@
 ;(require 'ido)
 (setq ido-enable-flex-matching t)
 (ido-mode t)
+
+;;;; PERL
+(add-to-list 'auto-mode-alist '("\\.t$" . perl-mode))
+(defalias 'perl-mode 'cperl-mode)
+
+(custom-set-variables
+ '(cperl-close-paren-offset -4)
+ '(cperl-continued-statement-offset 4)
+ '(cperl-brace-offset 0)
+ '(cperl-indent-level 4)
+ '(cperl-indent-parens-as-block t)
+ '(cperl-tab-always-indent t))
+
+(setq cperl-invalid-face (quote off)) 
+
 
 ;;;;
 
