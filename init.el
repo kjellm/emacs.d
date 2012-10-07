@@ -1,5 +1,11 @@
 (push "/usr/local/bin" exec-path)
 
+(add-to-list 'load-path "~/.emacs.d/el-get/el-get") 
+(unless (require 'el-get nil t)
+  (url-retrieve
+   "https://raw.github.com/dimitri/el-get/master/el-get-install.el"
+   (lambda (s) (goto-char (point-max)) (eval-print-last-sexp))))
+
 (setq make-backup-files nil)
 (setq auto-save-default nil)
 (setq-default tab-width 2)
@@ -60,6 +66,7 @@
   (add-to-list 'auto-mode-alist '("\\.rake\\'" . ruby-mode))
   (add-to-list 'auto-mode-alist '("\\.rb\\'" . ruby-mode))
   (add-to-list 'auto-mode-alist '("\\.ru\\'" . ruby-mode))
+  (add-to-list 'auto-mode-alist '("\\.gemspec\\'" . ruby-mode))
   (add-hook 'ruby-mode-hook '(lambda ()
                                (setq ruby-deep-arglist t)
                                (setq ruby-deep-indent-paren nil)
@@ -124,7 +131,6 @@
                :after (lambda () (ruby-mode-hook)))
         (:name inf-ruby  :type elpa)
         (:name ruby-compilation :type elpa)
-        (:name jabber  :type elpa)
         (:name css-mode 
                :type elpa 
                :after (lambda () (css-mode-hook)))
@@ -158,7 +164,7 @@
                :post-init (lambda ()
                             (add-to-list 'auto-mode-alist
                                          '("\\.\\(md\\|mdown\\|markdown\\)\\'" . markdown-mode))))
-        (:name yasnippet)
+        ;(:name yasnippet)
         (:name puppet-mode
                :description "A simple mode for editing puppet manifests"
                :type http
@@ -170,20 +176,7 @@
 
 (setq my-packages
       (append
-       '(el-get magit feature-mode)
+       '(el-get magit)
        (mapcar 'el-get-source-name el-get-sources)))
 
 (el-get 'sync my-packages)
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(jabber-account-list (quote (("km.oierud@gmail.com" (:password . "zgsjfuysehqbampe") (:port . 443) (:connection-type . ssl)))))
- '(jabber-connection-ssl-program nil))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
