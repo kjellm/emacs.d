@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: method
+# key: met
+# --
+sub $1 {
+    my (\$self$2) = @_;
+    $0
+}
