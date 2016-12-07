@@ -44,7 +44,7 @@
 ;;; Editor
 
 (setq custom-file "~/.emacs.d/custom.el")
-(load custom-file)
+(load custom-file  'noerror)
 
 (setq require-final-newline t)
 
