@@ -66,7 +66,20 @@
   (global-set-key (kbd "M-x") 'smex)
   (global-set-key (kbd "M-X") 'smex-major-mode-commands))
 
+
+;;; Writing
+
+;; Markdown
+
+(use-package markdown-mode)
+
 ;;; Programming
+
+(defun local-prog-mode-hook ()
+  (lambda () (add-to-list 'write-file-functions 'delete-trailing-whitespace)))
+
+(add-hook 'prog-mode-hook 'local-prog-mode-hook)
+
 
 ;;; Ruby
 
