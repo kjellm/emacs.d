@@ -56,13 +56,15 @@
 (put 'downcase-region 'disabled nil)
 (put 'upcase-region 'disabled nil)
 
+;; Project niceness
 (use-package projectile
   :config (projectile-global-mode t))
 
+;; Fuzzy search
 (use-package ido
   :config (ido-mode t))
 
-;; ido for M-x
+; ido for M-x
 (use-package smex
   :config
   (smex-initialize)
@@ -70,16 +72,19 @@
   (global-set-key (kbd "M-X") 'smex-major-mode-commands))
 
 
-;;; Writing
 
-;; Markdown
+;;; Writing
 
 (use-package markdown-mode)
 
 ;;; Programming
 
+(use-package flycheck)
+
 (defun local-prog-mode-hook ()
-  (lambda () (add-to-list 'write-file-functions 'delete-trailing-whitespace)))
+  (lambda () (add-to-list 'write-file-functions 'delete-trailing-whitespace))
+  (flycheck-mode)
+  (flyspell-prog-mode))
 
 (add-hook 'prog-mode-hook 'local-prog-mode-hook)
 
