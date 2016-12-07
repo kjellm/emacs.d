@@ -56,22 +56,22 @@
 (put 'downcase-region 'disabled nil)
 (put 'upcase-region 'disabled nil)
 
-;; Project niceness
 (use-package projectile
   :config (projectile-global-mode t))
 
-;; Fuzzy search
 (use-package ido
   :config (ido-mode t))
 
-; ido for M-x
 (use-package smex
   :config
   (smex-initialize)
   (global-set-key (kbd "M-x") 'smex)
   (global-set-key (kbd "M-X") 'smex-major-mode-commands))
 
-
+(require 'whitespace)
+(setq whitespace-line-column 80)
+(setq whitespace-style '(face tabs empty trailing lines-tail))
+(add-hook 'before-save-hook 'whitespace-cleanup)
 
 ;;; Writing
 
@@ -82,14 +82,14 @@
 (use-package flycheck)
 
 (defun local-prog-mode-hook ()
-  (lambda () (add-to-list 'write-file-functions 'delete-trailing-whitespace))
   (flycheck-mode)
-  (flyspell-prog-mode))
+  (flyspell-prog-mode)
+  (whitespace-mode))
 
 (add-hook 'prog-mode-hook 'local-prog-mode-hook)
 
 
-;;; Ruby
+;; Ruby
 
 (add-to-list 'auto-mode-alist '("\\.rake\\'" . ruby-mode))
 (add-to-list 'auto-mode-alist '("Rakefile\\'" . ruby-mode))
@@ -116,20 +116,14 @@
 
 (setq ruby-insert-encoding-magic-comment nil)
 
-;;; XML
+;; Other
 
 (require 'nxml-mode)
+(require 'sh-script)
+(use-package yaml-mode)
 
 ;;; VC
 
 (use-package magit
   :bind
   ("C-x g" . magit-status))
-
-;;; Shell
-
-(require 'sh-script)
-
-;;; YAML
-
-(use-package yaml-mode)
