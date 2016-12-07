@@ -43,6 +43,9 @@
 
 ;;; Editor
 
+(setq custom-file "~/.emacs.d/custom.el")
+(load custom-file)
+
 (setq require-final-newline t)
 
 (setq make-backup-files nil)
