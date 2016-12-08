@@ -1,11 +1,6 @@
-;;; Mac fixes
+;;; TODO
+; - enclose region in parens, quotes etc
 
-(setq default-input-method "MacOSX")
-(setq mac-command-modifier 'meta
-      mac-option-modifier nil
-      mac-allow-anti-aliasing t
-      mac-command-key-is-meta t)
-(menu-bar-mode +1)
 
 ;;; Packages
 
@@ -53,7 +48,6 @@
 (column-number-mode t)
 (size-indication-mode t)
 
-;; enable y/n answers
 (fset 'yes-or-no-p 'y-or-n-p)
 
 ;;; Editor
@@ -64,6 +58,9 @@
 (setq require-final-newline t)
 
 (setq make-backup-files nil)
+(setq auto-save-file-name-transforms
+      `((".*" ,temporary-file-directory t)))
+
 
 (setq-default indent-tabs-mode nil)
 (setq-default tab-width 8)
