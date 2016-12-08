@@ -1,6 +1,6 @@
 ;;; TODO
 ; - enclose region in parens, quotes etc
-
+; - ido/projectile fuzzy search
 
 ;;; Packages
 
