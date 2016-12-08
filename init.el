@@ -20,6 +20,21 @@
 
 (setq use-package-always-ensure t)
 
+;;; Mac fixes
+
+(setq default-input-method "MacOSX")
+(setq mac-command-modifier 'meta
+      mac-option-modifier nil
+      mac-allow-anti-aliasing t
+      mac-command-key-is-meta t)
+(menu-bar-mode +1)
+
+;; On OS X Emacs doesn't use the shell PATH if it's not started from
+;; the shell. Let's fix that:
+(use-package exec-path-from-shell
+  :config
+  (exec-path-from-shell-initialize))
+
 ;;; UI
 (scroll-bar-mode -1)
 (tool-bar-mode -1)
