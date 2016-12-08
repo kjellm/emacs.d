@@ -1,0 +1,16 @@
+# -*- mode: snippet -*-
+# name: Gramo GraphQL Object Type
+# key: gqlt
+# --
+module GraphQL
+  module EchoSchema
+    $1Type = GraphQL::ObjectType.define do
+      name '$1'
+      description <<~EOT
+        FIXME
+      EOT
+
+      field :$2$0
+    end
+  end
+end

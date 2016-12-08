@@ -73,6 +73,11 @@
 (setq whitespace-style '(face tabs empty trailing lines-tail))
 (add-hook 'before-save-hook 'whitespace-cleanup)
 
+(use-package yasnippet
+  :config
+  (yas-global-mode 1))
+
+
 ;;; Writing
 
 (use-package markdown-mode)

@@ -1,0 +1,16 @@
+# -*- mode: snippet -*-
+# name: Gramo GraphQL Interface Type
+# key: gqlt
+# --
+module GraphQL
+  module EchoSchema
+    $1Interface = GraphQL::InterfaceType.define do
+      name '$1Interface'
+      description <<~EOT
+        FIXME
+      EOT
+
+      field :$2$0
+    end
+  end
+end
