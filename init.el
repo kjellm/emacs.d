@@ -1,6 +1,8 @@
 ;;; TODO
-; - enclose region in parens, quotes etc
-; - ido/projectile fuzzy search
+;; - enclose region in parens, quotes etc
+;; - web-mode
+;; - javascript
+;;
 
 ;;; Packages
 
@@ -61,7 +63,6 @@
 (setq auto-save-file-name-transforms
       `((".*" ,temporary-file-directory t)))
 
-
 (setq-default indent-tabs-mode nil)
 (setq-default tab-width 8)
 
@@ -73,6 +74,9 @@
 
 (use-package ido
   :config (ido-mode t))
+
+(use-package flx-ido
+  :config (flx-ido-mode 1))
 
 (use-package smex
   :config
