@@ -10,13 +10,20 @@
 (use-package s)
 (use-package dash)
 
-(defun foobar (buffername)
+(defun local-buffer-project-root ()
+  (projectile-root-bottom-up (buffer-file-name)))
+(local-buffer-project-root)
+
+(defun local-buffer-project-lib-dir ()
+  (s-concat (local-buffer-project-root) "lib/"))
+
+(defun local-file-name-relative-to-libdir ()
+  (s-replace (local-buffer-project-lib-dir) "" (buffer-file-name)))
+
+(defun foobar ()
   "FIXME!"
-  (interactive "b")
-  (let* ((fname (buffer-file-name (get-buffer buffername)))
-         (proot (projectile-root-bottom-up fname))
-         (libdir (s-concat proot "lib/"))
-         (x (f-dirname (s-replace libdir "" fname)))
+  (interactive)
+  (let* ((x (f-no-ext (local-file-name-relative-to-libdir)))
          (y (-map 's-upper-camel-case (f-split x)))
          (z (s-join "\n" (-map (lambda (s) (s-concat "module " s)) y)))
          (beg (point))
