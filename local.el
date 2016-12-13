@@ -8,7 +8,9 @@
 
 (use-package f)
 (use-package s)
-(use-package dash)
+(use-package dash
+  :config
+  (dash-enable-font-lock))
 
 (defun local-buffer-project-root ()
   (projectile-root-bottom-up (buffer-file-name)))
