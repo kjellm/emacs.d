@@ -58,6 +58,8 @@
 
 (fset 'yes-or-no-p 'y-or-n-p)
 
+(transient-mark-mode -1)
+
 ;;; Editor
 
 (setq custom-file "~/.emacs.d/custom.el")
