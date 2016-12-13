@@ -20,14 +20,25 @@
 (defun local-file-name-relative-to-libdir ()
   (s-replace (local-buffer-project-lib-dir) "" (buffer-file-name)))
 
-(defun foobar ()
-  "FIXME!"
+;; TODO: make last part a class
+(defun local-rnest ()
+  "For ruby files, insert in current buffer, based on it's file name, the proper module nesting."
   (interactive)
-  (let* ((x (f-no-ext (local-file-name-relative-to-libdir)))
-         (y (-map 's-upper-camel-case (f-split x)))
-         (z (s-join "\n" (-map (lambda (s) (s-concat "module " s)) y)))
+  (let* ((parts (f-split (f-no-ext (local-file-name-relative-to-libdir))))
+         (camelized-parts (-map 's-upper-camel-case parts))
+         (str (s-join "\n" (--map (s-concat "module " it) camelized-parts)))
+         (end-str (s-join "\n" (--map "end" camelized-parts)))
          (beg (point))
          )
-    (insert z)
-    (indent-region beg (point))
+    (insert str)
+    (insert "\n\n")
+    (let ((mid (point))
+          )
+      (insert end-str)
+      (indent-region beg (point))
+      (goto-char mid))
     ))
+
+(provide 'local)
+
+;;; local.el ends here
