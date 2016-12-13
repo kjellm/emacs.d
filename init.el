@@ -136,3 +136,7 @@
 (use-package magit
   :bind
   ("C-x g" . magit-status))
+
+
+(push "~/.emacs.d/" load-path)
+(require 'local)
