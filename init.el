@@ -1,8 +1,14 @@
+;;; init.el --- Emacs initialization
+
+;;; Commentary:
+
 ;;; TODO
 ;; - enclose region in parens, quotes etc
 ;; - web-mode
 ;; - javascript
 ;;
+
+;;; Code:
 
 ;;; Packages
 
