@@ -14,7 +14,6 @@
 
 (defun local-buffer-project-root ()
   (projectile-root-bottom-up (buffer-file-name)))
-(local-buffer-project-root)
 
 (defun local-buffer-project-lib-dir ()
   (s-concat (local-buffer-project-root) "lib/"))
