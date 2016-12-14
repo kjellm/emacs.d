@@ -101,6 +101,10 @@
   :config
   (yas-global-mode 1))
 
+(use-package ag
+  :bind
+  ("C-c p s a" . ag-project))
+
 
 ;;; Writing
 
