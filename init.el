@@ -146,5 +146,5 @@
   ("C-x g" . magit-status))
 
 
-(push "~/.emacs.d/" load-path)
+(push "~/.emacs.d/lisp" load-path)
 (require 'local)
