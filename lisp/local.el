@@ -24,8 +24,10 @@
 (defun local-rnest ()
   "For ruby files, insert in current buffer, based on it's file name, the proper module nesting."
   (interactive)
-  (let* ((parts (f-split (f-no-ext (local-buffer-file-name-relative-to-libdir))))
-         (camelized-parts (-map 's-upper-camel-case parts))
+  (let* ((camelized-parts (-map 's-upper-camel-case
+                                (f-split
+                                 (f-no-ext
+                                  (local-buffer-file-name-relative-to-libdir)))))
          (module-names (-drop-last 1 camelized-parts))
          (class-name (-last-item camelized-parts))
          (module-decls (--map (s-concat "module " it) module-names))
