@@ -112,6 +112,9 @@
 
 ;;; Writing
 
+(add-hook 'text-mode-hook (flyspell-mode +1))
+
+
 (use-package markdown-mode)
 
 ;;; Programming
