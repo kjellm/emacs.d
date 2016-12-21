@@ -49,7 +49,9 @@
 (windmove-default-keybindings)
 
 (use-package solarized-theme)
-(load-theme 'solarized-dark t)
+(use-package zenburn-theme)
+(use-package gotham-theme)
+;(load-theme 'solarized-dark t)
 
 ;; mode line settings
 (line-number-mode t)
