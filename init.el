@@ -79,6 +79,8 @@
 (put 'downcase-region 'disabled nil)
 (put 'upcase-region 'disabled nil)
 
+(global-auto-revert-mode t)
+
 (use-package projectile
   :config (projectile-global-mode t))
 
