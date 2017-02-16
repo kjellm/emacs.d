@@ -60,7 +60,7 @@
 
 (fset 'yes-or-no-p 'y-or-n-p)
 
-(transient-mark-mode -1)
+(transient-mark-mode t)
 
 ;;; Editor
 
