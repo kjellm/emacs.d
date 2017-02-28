@@ -128,7 +128,7 @@
   (flycheck-mode)
   (flyspell-prog-mode)
   (whitespace-mode)
-  (subword-mode))
+  (subword-mode 1))
 
 (add-hook 'prog-mode-hook 'local-prog-mode-hook)
 
