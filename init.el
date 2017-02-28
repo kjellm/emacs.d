@@ -109,6 +109,9 @@
   :bind
   ("C-c p s a" . ag-project))
 
+(use-package guru-mode
+  :config
+  (guru-global-mode))
 
 ;;; Writing
 
@@ -124,7 +127,8 @@
 (defun local-prog-mode-hook ()
   (flycheck-mode)
   (flyspell-prog-mode)
-  (whitespace-mode))
+  (whitespace-mode)
+  (subword-mode 1))
 
 (add-hook 'prog-mode-hook 'local-prog-mode-hook)
 
