@@ -127,7 +127,8 @@
 (defun local-prog-mode-hook ()
   (flycheck-mode)
   (flyspell-prog-mode)
-  (whitespace-mode))
+  (whitespace-mode)
+  (subword-mode))
 
 (add-hook 'prog-mode-hook 'local-prog-mode-hook)
 
