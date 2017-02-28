@@ -109,6 +109,9 @@
   :bind
   ("C-c p s a" . ag-project))
 
+(use-package guru-mode
+  :config
+  (guru-global-mode))
 
 ;;; Writing
 
