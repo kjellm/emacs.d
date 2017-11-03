@@ -148,6 +148,10 @@
 
 (setq ruby-insert-encoding-magic-comment nil)
 
+;; Elixir
+
+(use-package elixir-mode)
+
 ;; Other
 
 (require 'nxml-mode)
