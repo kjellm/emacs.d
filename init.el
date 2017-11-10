@@ -160,7 +160,10 @@
 (require 'nxml-mode)
 (require 'sh-script)
 (use-package yaml-mode)
+
+; web-mode
 (use-package web-mode)
+(add-to-list 'auto-mode-alist '("\\.hbs\\'" . web-mode))
 
 ;;; VC
 
