@@ -4,7 +4,6 @@
 
 ;;; TODO
 ;; - enclose region in parens, quotes etc
-;; - web-mode
 ;; - javascript
 ;;
 
@@ -51,7 +50,10 @@
 (use-package solarized-theme)
 (use-package zenburn-theme)
 (use-package gotham-theme)
+;(load-theme 'solarized-light t)
 ;(load-theme 'solarized-dark t)
+;(load-theme 'gotham t)
+(load-theme 'zenburn t)
 
 ;; mode line settings
 (line-number-mode t)
@@ -151,12 +153,14 @@
 ;; Elixir
 
 (use-package elixir-mode)
+(use-package alchemist)
 
 ;; Other
 
 (require 'nxml-mode)
 (require 'sh-script)
 (use-package yaml-mode)
+(use-package web-mode)
 
 ;;; VC
 
