@@ -155,6 +155,12 @@
 (use-package elixir-mode)
 (use-package alchemist)
 
+;; Elm
+
+(use-package elm-mode
+  :init
+  (setq elm-format-on-save t))
+
 ;; Other
 
 (require 'nxml-mode)
