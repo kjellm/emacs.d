@@ -51,9 +51,9 @@
 (use-package zenburn-theme)
 (use-package gotham-theme)
 ;(load-theme 'solarized-light t)
-;(load-theme 'solarized-dark t)
+(load-theme 'solarized-dark t)
 ;(load-theme 'gotham t)
-(load-theme 'zenburn t)
+;(load-theme 'zenburn t)
 
 ;; mode line settings
 (line-number-mode t)
