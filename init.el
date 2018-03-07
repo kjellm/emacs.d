@@ -161,6 +161,14 @@
   :init
   (setq elm-format-on-save t))
 
+;; JavaScript
+
+(use-package js2-mode
+  :init (setq js2-basic-offset 2
+              js2-highlight-level 3)
+  :mode (("\\.js$" . js2-mode)))
+
+
 ;; Other
 
 (require 'nxml-mode)
