@@ -176,8 +176,9 @@
 (use-package yaml-mode)
 
 ; web-mode
-(use-package web-mode)
-(add-to-list 'auto-mode-alist '("\\.hbs\\'" . web-mode))
+(use-package web-mode
+  :init (setq web-mode-markup-indent-offset 2)
+  :mode (("\\.hbs$" . web-mode)))
 
 ;;; VC
 
