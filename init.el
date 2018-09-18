@@ -144,9 +144,10 @@
 (add-to-list 'auto-mode-alist '("Gemfile\\'" . ruby-mode))
 (add-to-list 'auto-mode-alist '("Guardfile\\'" . ruby-mode))
 
-(use-package rbenv)
-(global-rbenv-mode)
-(rbenv-use-corresponding)
+(use-package rbenv
+  :config
+  (global-rbenv-mode)
+  (rbenv-use-corresponding))
 
 (setq ruby-insert-encoding-magic-comment nil)
 
@@ -164,7 +165,7 @@
 ;; JavaScript
 
 (use-package js2-mode
-  :init (setq js2-basic-offset 2
+  :config (setq js2-basic-offset 2
               js2-highlight-level 3)
   :mode (("\\.js$" . js2-mode)))
 
@@ -177,7 +178,7 @@
 
 ; web-mode
 (use-package web-mode
-  :init (setq web-mode-markup-indent-offset 2)
+  :config (setq web-mode-markup-indent-offset 2)
   :mode (("\\.hbs$" . web-mode)))
 
 ;;; VC
