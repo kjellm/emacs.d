@@ -86,7 +86,9 @@
 (global-auto-revert-mode t)
 
 (use-package projectile
-  :config (projectile-global-mode t))
+  :config
+  (projectile-global-mode t)
+  (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map))
 
 (use-package ido
   :config (ido-mode t))
