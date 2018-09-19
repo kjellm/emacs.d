@@ -22,6 +22,8 @@
 
 (setq use-package-always-ensure t)
 
+(setq ring-bell-function 'ignore)
+
 ;;; Mac fixes
 
 (setq default-input-method "MacOSX")
