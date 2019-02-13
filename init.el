@@ -74,6 +74,7 @@
 (setq require-final-newline t)
 
 (setq make-backup-files nil)
+(setq create-lockfiles nil)
 (setq auto-save-file-name-transforms
       `((".*" ,temporary-file-directory t)))
 
