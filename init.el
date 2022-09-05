@@ -15,7 +15,6 @@
 (require 'use-package)
 
 (require 'package)
-(add-to-list 'package-archives '("marmalade" . "https://marmalade-repo.org/packages/"))
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
 (package-initialize)
 (package-refresh-contents)
@@ -124,10 +123,14 @@
 
 ;;; Writing
 
+(setq ispell-program-name "aspell") ; ispell, hunspell
+
 (add-hook 'text-mode-hook (flyspell-mode +1))
 
-
 (use-package markdown-mode)
+
+(use-package deft)
+(setq deft-directory "~/work/fagansvarlig/docs")
 
 ;;; Programming
 
@@ -176,6 +179,12 @@
               js2-highlight-level 3)
   :mode (("\\.js$" . js2-mode)))
 
+(use-package tide
+  :ensure t
+  :after (typescript-mode company flycheck)
+  :hook ((typescript-mode . tide-setup)
+         (typescript-mode . tide-hl-identifier-mode)
+         (before-save . tide-format-before-save)))
 
 ;; Other
 
