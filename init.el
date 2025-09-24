@@ -1,208 +1,293 @@
-;;; init.el --- Emacs initialization
-
+;;; init.el --- Personal Emacs configuration
 ;;; Commentary:
-
-;;; TODO
-;; - enclose region in parens, quotes etc
-;; - javascript
-;;
-
+;;; Kjell-Magne Øieurd's Emacs configuration
 ;;; Code:
 
-;;; Packages
-
-(push "~/.emacs.d/use-package" load-path)
-(require 'use-package)
+;; ============================================================================
+;; PACKAGE MANAGEMENT
+;; ============================================================================
 
 (require 'package)
-(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
+(setq package-archives
+      '(("gnu"   . "https://elpa.gnu.org/packages/")
+        ("melpa" . "https://melpa.org/packages/")
+        ;; uncomment if you want more stability
+        ;; ("melpa-stable" . "https://stable.melpa.org/packages/")
+        ))
 (package-initialize)
-(package-refresh-contents)
+(require 'use-package)
 
-(setq use-package-always-ensure t)
+;; ============================================================================
+;; PLATFORM-SPECIFIC CONFIGURATION
+;; ============================================================================
 
-(setq ring-bell-function 'ignore)
+;; macOS fixes - better key handling
+(when (eq system-type 'darwin)
+  (setq ns-command-modifier 'meta
+        ns-option-modifier  nil))
 
-;;; Mac fixes
+;; ============================================================================
+;; BASIC EMACS SETTINGS
+;; ============================================================================
 
-(setq default-input-method "MacOSX")
-(setq mac-command-modifier 'meta
-      mac-option-modifier nil
-      mac-allow-anti-aliasing t
-      mac-command-key-is-meta t)
-(menu-bar-mode +1)
-
-;; On OS X Emacs doesn't use the shell PATH if it's not started from
-;; the shell. Let's fix that:
-(use-package exec-path-from-shell
-  :config
-  (exec-path-from-shell-initialize))
-
-;;; UI
+;; UI Cleanup
 (scroll-bar-mode -1)
 (tool-bar-mode -1)
 (blink-cursor-mode -1)
 (setq inhibit-startup-screen t)
-(show-paren-mode t)
 
+;; Editor behavior
+(column-number-mode t)
+(setq make-backup-files nil)
+(setq create-lockfiles nil)
+(global-auto-revert-mode t)
+(setq require-final-newline t)
+
+;; ============================================================================
+;; EDITOR CONFIG & STANDARDS
+;; ============================================================================
+
+(use-package editorconfig
+  :ensure t
+  :config
+  (editorconfig-mode 1))
+
+;; ============================================================================
+;; WINDOW MANAGEMENT
+;; ============================================================================
+
+;; Shift + arrow keys for moving between windows
 (require 'windmove)
 (windmove-default-keybindings)
 
-(use-package solarized-theme)
-(use-package zenburn-theme)
-(use-package gotham-theme)
-;(load-theme 'solarized-light t)
-(load-theme 'solarized-dark t)
-;(load-theme 'gotham t)
-;(load-theme 'zenburn t)
+;; ============================================================================
+;; THEMES & APPEARANCE
+;; ============================================================================
 
-;; mode line settings
-(line-number-mode t)
-(column-number-mode t)
-(size-indication-mode t)
-
-(fset 'yes-or-no-p 'y-or-n-p)
-
-(transient-mark-mode t)
-
-;;; Editor
-
-(setq custom-file "~/.emacs.d/custom.el")
-(load custom-file  'noerror)
-
-(setq require-final-newline t)
-
-(setq make-backup-files nil)
-(setq create-lockfiles nil)
-(setq auto-save-file-name-transforms
-      `((".*" ,temporary-file-directory t)))
-
-(setq-default indent-tabs-mode nil)
-(setq-default tab-width 8)
-
-(put 'downcase-region 'disabled nil)
-(put 'upcase-region 'disabled nil)
-
-(global-auto-revert-mode t)
-
-(use-package projectile
+(use-package doom-themes
+  :ensure t
   :config
-  (projectile-global-mode t)
-  (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map))
+  ;; Global settings (optional)
+  (doom-themes-visual-bell-config)
+  (doom-themes-org-config)
+  ;; Load the theme you want
+  (load-theme 'doom-one t))
 
-(use-package ido
-  :config (ido-mode t))
+;; ============================================================================
+;; SYNTAX CHECKING & CODE QUALITY
+;; ============================================================================
 
-(use-package flx-ido
-  :config (flx-ido-mode 1))
+;; Real-time syntax checking
+(use-package flycheck
+  :ensure t
+  :hook (after-init . global-flycheck-mode))
 
-(use-package smex
-  :config
-  (smex-initialize)
-  (global-set-key (kbd "M-x") 'smex)
-  (global-set-key (kbd "M-X") 'smex-major-mode-commands))
+;; Spell-check in comments/strings
+(use-package flyspell
+  :ensure t
+  :hook (prog-mode . flyspell-prog-mode))
 
-(use-package project-explorer)
+;; Highlight problem whitespace
+(use-package whitespace
+  :hook (prog-mode . whitespace-mode))
 
-(require 'whitespace)
-(setq whitespace-line-column 80)
-(setq whitespace-style '(face tabs empty trailing lines-tail))
-(add-hook 'before-save-hook 'whitespace-cleanup)
+;; CamelCase word navigation
+(use-package subword
+  :hook (prog-mode . subword-mode))
 
-(use-package yasnippet
-  :config
-  (yas-global-mode 1))
+;; ============================================================================
+;; LEARNING & HABITS
+;; ============================================================================
 
-(use-package ag
-  :bind
-  ("C-c p s a" . ag-project))
-
+;; Discourage arrow keys and other non-Emacs habits
 (use-package guru-mode
+  :ensure t
   :config
   (guru-global-mode))
 
-;;; Writing
-
-(setq ispell-program-name "aspell") ; ispell, hunspell
-
-(add-hook 'text-mode-hook (flyspell-mode +1))
-
-(use-package markdown-mode)
-
-(use-package deft)
-(setq deft-directory "~/work/fagansvarlig/docs")
-
-;;; Programming
-
-(use-package flycheck)
-
-(defun local-prog-mode-hook ()
-  (flycheck-mode)
-  (flyspell-prog-mode)
-  (whitespace-mode)
-  (subword-mode 1))
-
-(add-hook 'prog-mode-hook 'local-prog-mode-hook)
-
-
-;; Ruby
-
-(add-to-list 'auto-mode-alist '("\\.rake\\'" . ruby-mode))
-(add-to-list 'auto-mode-alist '("Rakefile\\'" . ruby-mode))
-(add-to-list 'auto-mode-alist '("\\.gemspec\\'" . ruby-mode))
-(add-to-list 'auto-mode-alist '("\\.ru\\'" . ruby-mode))
-(add-to-list 'auto-mode-alist '("Gemfile\\'" . ruby-mode))
-(add-to-list 'auto-mode-alist '("Guardfile\\'" . ruby-mode))
-
-(use-package rbenv
-  :config
-  (global-rbenv-mode)
-  (rbenv-use-corresponding))
-
-(setq ruby-insert-encoding-magic-comment nil)
-
-;; Elixir
-
-(use-package elixir-mode)
-(use-package alchemist)
-
-;; Elm
-
-(use-package elm-mode
-  :init
-  (setq elm-format-on-save t))
-
-;; JavaScript
-
-(use-package js2-mode
-  :config (setq js2-basic-offset 2
-              js2-highlight-level 3)
-  :mode (("\\.js$" . js2-mode)))
-
-(use-package tide
-  :ensure t
-  :after (typescript-mode company flycheck)
-  :hook ((typescript-mode . tide-setup)
-         (typescript-mode . tide-hl-identifier-mode)
-         (before-save . tide-format-before-save)))
-
-;; Other
-
-(require 'nxml-mode)
-(require 'sh-script)
-(use-package yaml-mode)
-
-; web-mode
-(use-package web-mode
-  :config (setq web-mode-markup-indent-offset 2)
-  :mode (("\\.hbs$" . web-mode)))
-
-;;; VC
+;; ============================================================================
+;; VERSION CONTROL
+;; ============================================================================
 
 (use-package magit
+  :ensure t
   :bind
   ("C-x g" . magit-status))
 
+;; ============================================================================
+;; LSP & CODE INTELLIGENCE
+;; ============================================================================
 
-(push "~/.emacs.d/lisp" load-path)
-(require 'local)
+(use-package lsp-mode
+  :ensure t
+  :commands (lsp lsp-deferred)
+  :config
+  (setq lsp-prefer-flymake nil)
+  ;; Optional: reduce LSP verbosity
+  ;; (setq lsp-headerline-breadcrumb-enable nil)
+  ;; (setq lsp-signature-auto-activate nil)
+  )
+
+(use-package lsp-ui
+  :ensure t
+  :commands lsp-ui-mode
+  ;; Optional: customize LSP UI features
+  ;; :config
+  ;; (setq lsp-ui-doc-enable t
+  ;;       lsp-ui-peek-enable t
+  ;;       lsp-ui-sideline-enable t)
+  )
+
+;; Auto-completion
+(use-package company
+  :ensure t
+  :hook (after-init . global-company-mode)
+  ;; Optional: customize completion behavior
+  ;; :config
+  ;; (setq company-idle-delay 0.2
+  ;;       company-minimum-prefix-length 2)
+  )
+
+;; ============================================================================
+;; MODERN COMPLETION FRAMEWORK
+;; ============================================================================
+
+;; Vertical completion interface
+(use-package vertico
+  :ensure t
+  :init (vertico-mode))
+
+;; Better M-x history and more
+(use-package savehist
+  :init (savehist-mode 1))
+
+;; Flexible completion matching
+(use-package orderless
+  :ensure t
+  :init
+  (setq completion-styles '(orderless basic)
+        completion-category-defaults nil
+        completion-category-overrides '((file (styles basic partial-completion)))))
+
+;; Rich annotations in completion
+(use-package marginalia
+  :ensure t
+  :init (marginalia-mode))
+
+;; Enhanced commands using completion
+(use-package consult
+  :ensure t)
+
+;; ============================================================================
+;; PROJECT MANAGEMENT (SUGGESTED)
+;; ============================================================================
+
+;; Uncomment to enable project-aware operations
+;; (use-package projectile
+;;   :ensure t
+;;   :init
+;;   (projectile-mode +1)
+;;   :bind-keymap
+;;   ("C-c p" . projectile-command-map)
+;;   :config
+;;   ;; Use ripgrep when available
+;;   (when (executable-find "rg")
+;;     (setq projectile-generic-command "rg --files --color=never --null")))
+
+;; Consult + Projectile integration
+;; (use-package consult-projectile
+;;   :ensure t
+;;   :after (consult projectile))
+
+;; ============================================================================
+;; SEARCH & NAVIGATION
+;; ============================================================================
+
+;; Fast text search with ripgrep
+(use-package ripgrep
+  :ensure t)
+
+;; ============================================================================
+;; LANGUAGE-SPECIFIC CONFIGURATION
+;; ============================================================================
+
+;; Go development
+(use-package go-mode
+  :ensure t
+  :hook ((go-mode . lsp-deferred)
+         (before-save . gofmt-before-save)))
+
+;; ============================================================================
+;; DISCOVERABILITY & HELP
+;; ============================================================================
+
+(use-package which-key
+  :ensure t
+  :init (which-key-mode)
+  :config
+  ;; Optional: customize which-key behavior
+  ;; (setq which-key-idle-delay 0.5
+  ;;       which-key-max-display-columns 5)
+  )
+
+;; ============================================================================
+;; KEY BINDINGS
+;; ============================================================================
+
+;; Core navigation and search
+(global-set-key (kbd "C-s")     #'consult-line)        ; in-buffer search
+(global-set-key (kbd "C-x b")   #'consult-buffer)      ; switch buffers
+(global-set-key (kbd "M-y")     #'consult-yank-pop)    ; kill-ring
+(global-set-key (kbd "C-x C-r") #'consult-recent-file) ; recent files
+
+;; Project-wide search
+(global-set-key (kbd "C-c s") #'consult-ripgrep)
+
+;; Optional: additional useful bindings
+;; (global-set-key (kbd "C-c f") #'consult-find)         ; find files
+;; (global-set-key (kbd "C-c g") #'consult-goto-line)    ; go to line
+;; (global-set-key (kbd "C-c i") #'consult-imenu)        ; navigate symbols
+;; (global-set-key (kbd "C-c o") #'consult-outline)      ; navigate headings
+
+;; Alternative: keep original C-s behavior and add consult-line elsewhere
+;; (global-set-key (kbd "C-c l") #'consult-line)
+
+;; Optional: project-specific bindings (requires projectile)
+;; (global-set-key (kbd "C-c p s") #'consult-projectile-ripgrep)
+;; (global-set-key (kbd "C-c p f") #'consult-projectile-find-file)
+
+;; ============================================================================
+;; AI ASSISTANCE (EXPERIMENTAL)
+;; ============================================================================
+
+;; GitHub Copilot integration
+;; (use-package copilot
+;;   :ensure t
+;;   :hook (prog-mode . copilot-mode)
+;;   :bind (:map copilot-completion-map
+;;          ("C-<tab>" . 'copilot-accept-completion)
+;;          ("C-TAB" . 'copilot-accept-completion)
+;;          ("C-<right>" . 'copilot-accept-completion-by-word)
+;;          ("C-<down>" . 'copilot-next-completion)
+;;          ("C-<up>" . 'copilot-previous-completion)))
+;; ============================================================================
+;; CUSTOM VARIABLES & FACES
+;; ============================================================================
+
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   '(company consult doom-themes flycheck go-mode guru-mode lsp-mode
+     lsp-ui magit marginalia orderless ripgrep vertico which-key editorconfig)))
+
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
+
+;;; init.el ends here

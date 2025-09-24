@@ -1,6 +1,0 @@
-# -*- mode: snippet -*-
-# name: Pry Binding
-# key: bpry
-# --
-require 'pry'; binding.pry
-$0
