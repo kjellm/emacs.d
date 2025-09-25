@@ -114,6 +114,12 @@
   :bind
   ("C-x g" . magit-status))
 
+(use-package magit-todos
+  :ensure t
+  :after magit
+  :config
+  (magit-todos-mode 1))
+
 ;; ============================================================================
 ;; LSP & CODE INTELLIGENCE
 ;; ============================================================================
@@ -280,8 +286,8 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(company consult doom-themes flycheck go-mode guru-mode lsp-mode
-     lsp-ui magit marginalia orderless ripgrep vertico which-key editorconfig)))
+   '(company consult doom-themes flycheck go-mode guru-mode lsp-ui magit
+	     magit-todos marginalia orderless ripgrep vertico)))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
