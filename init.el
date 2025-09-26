@@ -89,6 +89,15 @@
 
 ;; Highlight problem whitespace
 (use-package whitespace
+  :config
+  (setq whitespace-style '(face lines-tail)
+        whitespace-line-column 80)
+
+  ;; tweak the face for overflow beyond col 80
+  (set-face-attribute 'whitespace-line nil
+    :background "#593939"
+    :foreground nil)
+  
   :hook (prog-mode . whitespace-mode))
 
 ;; CamelCase word navigation
