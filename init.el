@@ -43,6 +43,7 @@
 (global-auto-revert-mode t)
 (setq require-final-newline t)
 (fset 'yes-or-no-p 'y-or-n-p)
+(recentf-mode t)
 
 ;; ============================================================================
 ;; EDITOR CONFIG & STANDARDS
@@ -299,9 +300,9 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(company consult doom-themes flycheck go-mode guru-mode lsp-mode
-	     lsp-ui magit magit-todos marginalia orderless ripgrep
-	     vertico yaml-mode)))
+   '(company consult doom-themes flycheck go-mode guru-mode hl-todo
+	     lsp-mode lsp-ui magit magit-todos marginalia orderless
+	     ripgrep vertico yaml-mode)))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
