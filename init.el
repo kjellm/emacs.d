@@ -42,6 +42,7 @@
 (setq create-lockfiles nil)
 (global-auto-revert-mode t)
 (setq require-final-newline t)
+(fset 'yes-or-no-p 'y-or-n-p)
 
 ;; ============================================================================
 ;; EDITOR CONFIG & STANDARDS
