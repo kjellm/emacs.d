@@ -196,25 +196,24 @@
   :ensure t)
 
 ;; ============================================================================
-;; PROJECT MANAGEMENT (SUGGESTED)
+;; PROJECT MANAGEMENT
 ;; ============================================================================
 
-;; Uncomment to enable project-aware operations
-;; (use-package projectile
-;;   :ensure t
-;;   :init
-;;   (projectile-mode +1)
-;;   :bind-keymap
-;;   ("C-c p" . projectile-command-map)
-;;   :config
-;;   ;; Use ripgrep when available
-;;   (when (executable-find "rg")
-;;     (setq projectile-generic-command "rg --files --color=never --null")))
+(use-package projectile
+  :ensure t
+  :init
+  (projectile-mode +1)
+  :bind-keymap
+  ("C-c p" . projectile-command-map)
+  :config
+  ;; Use ripgrep when available
+  (when (executable-find "rg")
+    (setq projectile-generic-command "rg --files --color=never --null")))
 
 ;; Consult + Projectile integration
-;; (use-package consult-projectile
-;;   :ensure t
-;;   :after (consult projectile))
+(use-package consult-projectile
+   :ensure t
+   :after (consult projectile))
 
 ;; ============================================================================
 ;; SEARCH & NAVIGATION
@@ -300,9 +299,10 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(company consult doom-themes flycheck go-mode guru-mode hl-todo
-	     lsp-mode lsp-ui magit magit-todos marginalia orderless
-	     ripgrep vertico yaml-mode)))
+   '(company consult consult-projectile dockerfile-mode doom-themes
+	     flycheck go-mode guru-mode hl-todo lsp-mode lsp-ui magit
+	     magit-todos marginalia orderless projectile ripgrep
+	     vertico yaml-mode)))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
